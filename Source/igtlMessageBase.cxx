@@ -138,11 +138,23 @@ void MessageBase::SetDeviceType(const std::string& type)
 
 std::string MessageBase::GetDeviceName() const
 {
+#if OpenIGTLink_HEADER_VERSION >= 2
+  if (m_MetaDataMap.find(IGTL_DEVICE_NAME_METADATA_KEY) != m_MetaDataMap.end())
+  {
+    m_DeviceName = m_MetaDataMap.find(IGTL_DEVICE_NAME_METADATA_KEY)->second.second;
+  }
+#endif
   return m_DeviceName;
 }
 
 const char* MessageBase::GetDeviceName()
 {
+#if OpenIGTLink_HEADER_VERSION >= 2
+  if (m_MetaDataMap.find(IGTL_DEVICE_NAME_METADATA_KEY) != m_MetaDataMap.end())
+  {
+    m_DeviceName = m_MetaDataMap[IGTL_DEVICE_NAME_METADATA_KEY].second;
+  }
+#endif
   return m_DeviceName.c_str();
 }
 
